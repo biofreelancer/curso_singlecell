@@ -2,7 +2,7 @@
 wget -O cellranger-7.1.0.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-7.1.0.tar.gz?Expires=1671195556&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1leHAvY2VsbHJhbmdlci03LjEuMC50YXIuZ3oiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2NzExOTU1NTZ9fX1dfQ__&Signature=JTHjy56iQeIix7CRNm8-lwDWp6DFOxY9zWUIJ52jvFttlBFDOkmFQQYk~s8BkopOriSFcaz1ivwmQOTaB1RXZAd6ESZVkztvQZktS54AVnO1EmOQVrb~RUsgIa9a9CdJivDY-P8igToBMXe5BH0B3Q9-PvwwwmnHhtHhRyQNiDAUrsX6sMKD9yyRpuH0hCEcETzacynqWnqpRIz8SKPzbE~zDrLO~51N-8MDo535G-~K3IUtJfBzTQ9ZMm4O5TepXyHGEJrOr8fxu5HC3AdQ5GjsTTh5EF3dtnyQoo~XYtP2MDTYfUWeSzmyz01W6Swicxm0lVO6cN7n4DooU6HS6Q__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
 
 # Descomprimir cellranger
-tar -xzvf cellranger-7.1.0.tar.gz
+tar -xzvf cellranger-7.1.0.tar.gz && rm cellranger-7.1.0.tar.gz
 
 # Crear un link simbolico
 sudo ln -s $(pwd)/cellranger-7.1.0/cellranger /usr/local/bin
