@@ -23,15 +23,16 @@ fasta_in="${source}/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
 gtf_url="http://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf.gz"
 gtf_in="${source}/gencode.v32.primary_assembly.annotation.gtf"
 
-
+echo "[BIOFREELANCER] Descargando fasta"
 if [ ! -f "$fasta_in" ]; then
     curl -sS "$fasta_url" | zcat > "$fasta_in"
 fi
+echo "[BIOFREELANCER] Descargando GTF"
 if [ ! -f "$gtf_in" ]; then
     curl -sS "$gtf_url" | zcat > "$gtf_in"
 fi
 
-
+echo "[BIOFREELANCER] Renombrando fasta"
 # Modify sequence headers in the Ensembl FASTA to match the file
 # "GRCh38.primary_assembly.genome.fa" from GENCODE. Unplaced and unlocalized
 # sequences such as "KI270728.1" have the same names in both versions.
@@ -52,7 +53,7 @@ cat "$fasta_in" \
     | sed -E 's/^>MT />chrM /' \
     > "$fasta_modified"
 
-
+echo "[BIOFREELANCER] Editando GTF"
 # Remove version suffix from transcript, gene, and exon IDs in order to match
 # previous Cell Ranger reference packages
 #
@@ -68,7 +69,6 @@ cat "$gtf_in" \
     | sed -E 's/transcript_id "'"$ID"'";/transcript_id "\1"; transcript_version "\3";/' \
     | sed -E 's/exon_id "'"$ID"'";/exon_id "\1"; exon_version "\3";/' \
     > "$gtf_modified"
-
 
 # Define string patterns for GTF tags
 # NOTES:
@@ -93,7 +93,7 @@ TX_PATTERN="transcript_type \"${BIOTYPE_PATTERN}\""
 READTHROUGH_PATTERN="tag \"readthrough_transcript\""
 PAR_PATTERN="tag \"PAR\""
 
-
+echo "[BIOFREELANCER] Construyendo gene allow list"
 # Construct the gene ID allowlist. We filter the list of all transcripts
 # based on these criteria:
 #   - allowable gene_type (biotype)
@@ -113,7 +113,7 @@ cat "$gtf_modified" \
     | uniq \
     > "${build}/gene_allowlist"
 
-
+echo "[BIOFREELANCER] Filtrando GTF"
 # Filter the GTF file based on the gene allowlist
 gtf_filtered="${build}/$(basename "$gtf_in").filtered"
 # Copy header lines beginning with "#"
@@ -122,8 +122,9 @@ grep -E "^#" "$gtf_modified" > "$gtf_filtered"
 grep -Ff "${build}/gene_allowlist" "$gtf_modified" \
     >> "$gtf_filtered"
 
-
+echo "[BIOFREELANCER] Finalmente creando la referencia..."
 # Create reference package
 cellranger mkref --ref-version="$version" \
     --genome="$genome" --fasta="$fasta_modified" --genes="$gtf_filtered"
 
+echo "[BIOFREELANCER] Referencia terminada con EXITO!"
