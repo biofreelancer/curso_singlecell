@@ -20,7 +20,7 @@ p_load( "cowplot" )
 p_load( "BiocManager" )
 
 p_load( "SingleCellExperiment" )
-#p_load( "celldex" )
+p_load( "celldex" )
 #p_load( "SingleR" )
 
 # p_load( "Seurat" )
