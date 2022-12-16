@@ -1,4 +1,5 @@
 # Script para instalar todas las dependencias necesarias para Seurat y anotacion con singleR
 if( !require( "pacman" ) ) {
     install.packages( "pacman" )
+    library( "pacman" )
 }
