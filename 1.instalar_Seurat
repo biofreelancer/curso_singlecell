@@ -1,5 +1,18 @@
 # Script para instalar todas las dependencias necesarias para Seurat y anotacion con singleR
 if( !require( "pacman" ) ) {
     install.packages( "pacman" )
-    library( "pacman" )
 }
+
+# cargar pacman
+library( "pacman" )
+
+# usar pacman para otros paquetes
+p_load( "tidyr" )
+p_load( "dplyr" )
+p_load( "ggplot2" )
+p_load( "stringr" )
+
+p_load( "ggpubr" )
+p_load( "hexbin" )
+p_load( "ggsci" )
+p_load( "cowplot" )
