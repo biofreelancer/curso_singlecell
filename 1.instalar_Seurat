@@ -16,3 +16,5 @@ p_load( "ggpubr" )
 p_load( "hexbin" )
 p_load( "ggsci" )
 p_load( "cowplot" )
+
+p_load( "BiocManager" )
