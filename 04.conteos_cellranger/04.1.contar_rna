@@ -1,0 +1,8 @@
+cellranger count --id=pbmc1k_cellrangercounts \
+	--fastqs=data \
+	--sample=pbmc1k \
+	--transcriptome=../GRCh38 \
+	--no-bam \
+	--nosecondary \
+	--localcores 2 \
+	--localmem 2
